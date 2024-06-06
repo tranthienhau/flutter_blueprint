@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: Size(375, 812),
-        builder: () {
+        builder: (BuildContext context, Widget? child) {
           return MaterialApp(
               title: 'Carousel Demo',
               theme: ThemeData(

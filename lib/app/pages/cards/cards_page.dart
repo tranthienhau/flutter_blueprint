@@ -1,24 +1,24 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_blueprint/app/core/app_resouces.dart';
 import 'package:fl_blueprint/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../view_models/cards/cards_viewmodel.dart';
 import '../../widgets/page_widget.dart';
 
 /// Card page widget
-class CardsPage extends HookWidget {
+class CardsPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       // ViewModel init
       final widgetsBinding = WidgetsBinding.instance;
       if (widgetsBinding != null) {
         widgetsBinding.addPostFrameCallback((_) {
-          context.read(cardsViewModelProvider.notifier).initialize();
+          ref.read(cardsViewModelProvider.notifier).initialize();
         });
       }
 
@@ -65,7 +65,7 @@ class CardsPage extends HookWidget {
                             )),
                         child: InkWell(
                             onTap: () {
-                              context
+                              ref
                                   .read(cardsViewModelProvider.notifier)
                                   .navigateToScreen2();
                             },
@@ -95,7 +95,7 @@ class CardsPage extends HookWidget {
                             )),
                         child: InkWell(
                             onTap: () {
-                              context
+                              ref
                                   .read(cardsViewModelProvider.notifier)
                                   .navigateToComponentsPage();
                             },
@@ -118,12 +118,12 @@ class CardsPage extends HookWidget {
   }
 }
 
-class _ListCard extends HookWidget {
+class _ListCard extends HookConsumerWidget {
   final _cardsProvider =
       Provider.autoDispose((ref) => ref.watch(cardsViewModelProvider).cards);
   @override
-  Widget build(BuildContext context) {
-    final cards = useProvider(_cardsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cards = ref.watch(_cardsProvider);
     debugPrint('_ListCard builder');
     return ListView.builder(
         itemCount: cards.length,

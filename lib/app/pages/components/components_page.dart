@@ -1,4 +1,3 @@
-
 import 'package:fl_blueprint/app/core/app_resouces.dart';
 import 'package:fl_blueprint/app/services/navigation_service.dart';
 import 'package:fl_blueprint/app/widgets/widget_util.dart';
@@ -8,22 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../view_models/components/components_viewmodel.dart';
 import '../../widgets/page_widget.dart';
 
-
-
 /// Components Page
-class ComponentsPage extends HookWidget {
+class ComponentsPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       // ViewModel init
       final widgetsBinding = WidgetsBinding.instance;
       if (widgetsBinding != null) {
         widgetsBinding.addPostFrameCallback((_) {
-          context.read(componentsViewModelProvider.notifier).initialize();
+          ref.read(componentsViewModelProvider.notifier).initialize();
         });
       }
 
@@ -31,7 +29,7 @@ class ComponentsPage extends HookWidget {
     }, []);
     return PageWidget(
         backgroundColor: Color(0xFF141D28),
-        appBar: buildNavigationBar(leadingTapped: (){
+        appBar: buildNavigationBar(leadingTapped: () {
           locator.get<NavigationService>().goBack();
         }),
         body: Container(
@@ -77,20 +75,20 @@ class ComponentsPage extends HookWidget {
   }
 }
 
-class _ListComponent extends HookWidget {
+class _ListComponent extends HookConsumerWidget {
   final componentsProvider = Provider.autoDispose(
       (ref) => ref.watch(componentsViewModelProvider).components);
 
   @override
-  Widget build(BuildContext context) {
-    final components = useProvider(componentsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final components = ref.watch(componentsProvider);
     return ListView.builder(
         itemCount: components.length,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (_, index) {
           return _ComponentItemView(components[index], () {
-            context
+            ref
                 .read(componentsViewModelProvider.notifier)
                 .openUrl(components[index].url);
           });

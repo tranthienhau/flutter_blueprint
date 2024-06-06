@@ -19,7 +19,7 @@ Flutter Architecture Blueprint is a project that follows Clean Architecture prin
 
 ## Requirements
 
-- [Flutter 2.2+](https://flutter.dev/docs/development/tools/sdk/releases)
+- [Flutter 3.22](https://flutter.dev/docs/development/tools/sdk/releases)
 
 ## Environment
 
@@ -30,7 +30,7 @@ Flutter Architecture Blueprint is a project that follows Clean Architecture prin
 **Android**
 - Android 5.1+
     - minSdkVersion 22
-- targetSdkVersion 30
+- targetSdkVersion 34
 
 ## App architecture
 

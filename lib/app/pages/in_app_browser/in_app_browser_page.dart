@@ -69,7 +69,6 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
                 shouldOverrideUrlLoading:
                     (controller, shouldOverrideUrlLoadingRequest) async {
                   var uri = shouldOverrideUrlLoadingRequest.request.url!;
-
                   if (![
                     "http",
                     "https",
